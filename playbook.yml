@@ -1,0 +1,16 @@
+---
+- hosts: all
+  tasks:
+    - name: ensure ntpd is at the latest version
+      yum: pkg=ntp state=latest
+      notify:
+      - restart ntpd
+    - name: ensure apache is at the latest version
+      yum: pkg=apache2 state=latest
+    - name: ensure ruby is at the latest version
+      yum: pkg=ruby state=latest
+  handlers:
+    - name: restart ntpd
+      service: name=ntpd state=restarted
+    - name: restart apache2
+      service: name=apache2 state=restarted
